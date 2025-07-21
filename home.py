@@ -1,0 +1,41 @@
+
+
+
+from pathlib import Path
+import xlsxwriter
+def two_variants():
+    print('Выберете куда записывать строки. 1 - csv, 2 - xlsx')
+    s=int(input())
+    
+    print('Введите строки. Для прекращения ввода введите "#"')
+    line=[]
+    while True:
+        lines=input('Введите строку: ')
+        if lines.strip()=='#':
+            print('Конец ввода')
+            break
+        line.append(lines)
+    if s==2:
+        workbook=xlsxwriter.Workbook('new_file.xlsx')
+        sheet1=workbook.add_worksheet()
+        count=0
+        for i in line:
+            sheet1.write(count,0 , i)
+            count+=1
+        workbook.close()  
+    if not line:
+        return print('Вы не ввели ни одной строки')
+    if s==1:
+        with open('new_file.csv', 'w', newline='', encoding='utf-8') as file:
+            for i in line:
+                file.write(i+'\n')
+        return print(Path('new_file.csv').read_text(encoding = 'utf-8'))
+
+
+
+    
+
+    
+
+
+trywork = two_variants()
